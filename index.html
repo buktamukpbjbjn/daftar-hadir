@@ -540,7 +540,7 @@
         }
     }
 
-    function kirim() {
+    async function kirim() {
 
         const pokja = getSelectedPokja();
         const perusahaan = document.getElementById("perusahaan").value;
@@ -561,38 +561,36 @@
         }
 
         setLoading(true);
+
         const foto = getCompressedImage(100);
 
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = API_URL;
-        form.target = "hidden_iframe";
+        const formData = new URLSearchParams();
+        formData.append("pokja", pokja);
+        formData.append("perusahaan", perusahaan);
+        formData.append("nama", nama);
+        formData.append("nik", nik);
+        formData.append("jk", jk);
+        formData.append("jabatan", jabatan);
+        formData.append("telepon", telepon);
+        formData.append("foto", foto);
 
-        const fields = {
-            pokja,
-            perusahaan,
-            nama,
-            nik,
-            jk,
-            jabatan,
-            telepon,
-            foto
-        };
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                body: formData
+            });
 
-        for (let key in fields) {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = fields[key];
-            form.appendChild(input);
+            const text = await response.text();
+
+            alert(text); // tampilkan hasil dari Apps Script
+
+            resetForm();
+
+        } catch (err) {
+            alert("Gagal mengirim data: " + err.message);
         }
 
-        document.body.appendChild(form);
-        form.submit();
-        setTimeout(() => {
-          setLoading(false);
-          resetForm();
-        }, 2000);
+        setLoading(false);
     }
 
     function scrollKeAtas() {
@@ -645,8 +643,6 @@
         }
     });
   </script>
-
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
 
 </body>
 </html>
