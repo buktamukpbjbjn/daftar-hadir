@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar Hadir Penyedia</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05) 2px, transparent 2px, transparent 12px), linear-gradient(180deg, #1e3a8a, #3b82f6);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 900px;
+      max-width: 95%;
+      min-height: 700px;
+    }
+
+    .logo {
+      max-width: 100px;
+      padding: 6px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      transition: 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 34px;
+      font-family: 'Arial Black', serif;
+      color: rgba(255,255,255,0.9);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      font-family: 'Georgia', serif;
+      color: rgba(255,255,255,0.9);
+    }
+
+    h3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+      width: 40%;
+      margin: 20px auto;
+      border-radius: 12px;
+      border: none;
+      box-sizing: border-box;
+      font-size: 20px;
+      font-family: 'Courier', serif;
+      background-color: rgba(255,255,255,0.9);
+      color: #1e3a8a;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+      background-color: rgba(255,255,255,0.9);
+      color: #1e3a8a;
+      box-sizing: border-box;
+    }
+
+    .multiselect {
+      position: relative;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .select-box {
+      background: rgba(255,255,255,0.9);
+      color: #1e3a8a;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .arrow {
+      float: right;
+      font-weight: bold;
+    }
+
+    .dropdown-options {
+      display: none;
+      position: absolute;
+      width: 100%;
+      max-height: 220px;
+      overflow-y: auto;
+      background: white;
+      border-radius: 12px;
+      margin-top: 5px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+
+    .dropdown-options label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      color: #1e3a8a;
+      cursor: pointer;
+      font-size: 15px;
+      gap: 10px;
+    }
+
+    .dropdown-options input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-options label:hover {
+      background: #e0e7ff;
+    }
+
+    #searchPokja {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      border-bottom: 1px solid #e5e7eb;
+      outline: none;
+      font-size: 16px;
+      border-radius: 12px 12px 0 0;
+      box-sizing: border-box;
+      color: #1e3a8a;
+    }
+
+    #searchPokja::placeholder {
+      color: #6b7280;
+    }
+
+    #pokjaList {
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .camera-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .camera-wrapper video,
+    .camera-wrapper canvas {
+      width: 300px;
+      max-height: 50vh;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .camera-actions {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .camera-actions button {
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .camera-actions button:hover {
+      transform: scale(1.05);
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      margin-top: 30px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: none;
+      margin-left: 10px;
+      width: 18px;
+      height: 18px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #333;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="logo-container">
+      <img src="logo.png" class="logo">
+    </div>
+
+    <h1>DAFTAR HADIR</h1>
+    <h2>KLARIFIKASI DAN PEMBUKTIAN KUALIFIKASI</h2>
+    <h3><span id="tanggal"></span></h3>
+
+    <div class="form-group">
+      <label>TUJUAN POKJA PEMILIHAN :</label>
+      <p><div class="multiselect">
+        <div class="select-box" onclick="toggleDropdown()">
+          <span id="selectedPokja">Pilih Pokja Pemilihan yang akan dituju</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div id="dropdownPokja" class="dropdown-options">
+          <input type="text" id="searchPokja" placeholder="Cari Pokja Pemilihan..." onkeyup="filterPokja()" />
+          <div id="pokjaList"></div>
+        </div>
+      </div>
+      <small>*Pilih Pokja Pemilihan sesuai undangan. Pilih lebih dari 1 jika mendapatkan lebih dari 1 undangan</small></p>
+    </div>
+
+    <div class="form-group">
+      <label>NAMA PERUSAHAAN :</label>
+      <p><input type="text" id="perusahaan" autocomplete="off" placeholder="Masukkan nama perusahaan sesuai akta pendirian / akta perubahan" required>
+      <small>*Mohon diperhatikan penulisan huruf besar dan kecil (kapitalisasi) karena dapat mempengaruhi keakuratan data yang masuk.</small></p>
+    </div>
+
+    <div class="form-group">
+      <label>NAMA LENGKAP :</label>
+      <p><input type="text" id="nama" oninput="this.value=this.value.toUpperCase()" autocomplete="off" placeholder="Masukkan nama lengkap sesuai KTP" required></p>
+    </div>
+
+    <div class="form-group">
+      <label>NIK :</label>
+      <p><input type="text" id="nik" maxlength="16" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" placeholder="Masukkan Nomor Induk Kependudukan (NIK) 16 digit" required></p>
+    </div>
+
+    <div class="form-group">
+      <label>JENIS KELAMIN :</label>
+      <p><select id="jk" required>
+        <option value="" disabled selected>Pilih jenis kelamin</option>
+        <option value="LAKI-LAKI">LAKI-LAKI</option>
+        <option value="PEREMPUAN">PEREMPUAN</option>
+      </select></p>
+    </div>
+
+    <div class="form-group">
+      <label>JABATAN :</label>
+      <p><input type="text" id="jabatan" oninput="this.value=this.value.toUpperCase()" autocomplete="off" placeholder="Masukkan jabatan dalam perusahaan" required></p>
+    </div>
+
+    <div class="form-group">
+      <label>NO TELEPON :</label>
+      <p><input type="text" id="telepon" maxlength="15" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" autocomplete="off" placeholder="Masukkan nomor telepon menggunakan awalan 62 (contoh: 6282246758975)" required></p>
+    </div>
+
+    <div class="camera-wrapper">
+      <label class="judul-foto">FOTO WAJAH :</label>
+
+      <video id="video" autoplay playsinline muted style="display:none;"></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+
+      <div class="camera-actions">
+        <button type="button" id="btnCamera" onclick="aktifkanKamera()">AKTIFKAN KAMERA</button>
+      </div>
+    </div>
+
+    <p id="status"></p>
+
+    <p><button id="btnHadir" class="btn" onclick="kirim()" disabled>
+      <span id="btnText">KIRIM</span>
+      <span id="spinner" class="spinner"></span>
+    </button></p>
+
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxfl0RIyPSF-A966EYtsDSYS_oTM0vV7jjMRPRcMG8ADgCTCv-rhTzqcM4q-y9wN3iD/exechttps://script.google.com/macros/s/AKfycby-UM_2Vlwd5cNWl5yT25qKOanur3VbYJFpms8jycGv8HrAeY9uxDQsZk4ZjhAsjrn3/exec";
+
+    /* ===== TANGGAL UNTUK HEAD ===== */
+    const tw = new Date();
+    const hariArr=["Minggu,","Senin,","Selasa,","Rabu,","Kamis,","Jum'at,","Sabtu,"];
+    const bulanArr=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember"];
+    document.getElementById("tanggal").innerText =
+      hariArr[tw.getDay()]+" "+tw.getDate()+" "+bulanArr[tw.getMonth()]+" "+tw.getFullYear();
+
+    /* ===== AMBIL DROPDOWN POKJA DARI SPREADSHEET ===== */
+    function loadPokja() {
+    fetch(API_URL + "?action=pokja")
+        .then(res => res.json())
+        .then(data => {
+        console.log("DATA DARI API:", data);  // 🔥 debug
+
+        const listContainer = document.getElementById("pokjaList");
+        listContainer.innerHTML = "";
+
+        data.forEach(function(pokja) {
+            const label = document.createElement("label");
+            label.classList.add("pokja-item");
+            label.innerHTML = `
+            <span>${pokja}</span>
+            <input type="checkbox" value="${pokja}" onchange="updateSelectedPokja()">
+            `;
+            listContainer.appendChild(label);
+        });
+        })
+        .catch(err => {
+        console.error("ERROR FETCH:", err);
+        alert("GAGAL MEMUAT DAFTAR POKJA");
+        });
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownPokja");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+
+      document.getElementById("searchPokja").value = "";
+      filterPokja();
+    }
+
+    function updateSelectedPokja() {
+      const checked = document.querySelectorAll("#dropdownPokja input:checked");
+      const selected = Array.from(checked).map(cb => cb.value);
+      document.getElementById("selectedPokja").innerText =
+        selected.length > 0 ? selected.join(", ") : "Pilih Pokja Pemilihan yang akan dituju";
+    }
+
+    function getSelectedPokja() {
+      const checked = document.querySelectorAll("#dropdownPokja input:checked");
+      return Array.from(checked).map(cb => cb.value).join(", ");
+    }
+
+    function filterPokja() {
+      const keyword = document.getElementById("searchPokja").value.toLowerCase();
+      const items = document.querySelectorAll("#pokjaList .pokja-item");
+
+      items.forEach(function(item) {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(keyword)) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    window.onload = function() {
+      loadPokja(); // load pokja dari spreadsheet
+    };
+
+    /* ===== KAMERA ===== */
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    let cameraStream = null;
+    let kameraAktif = false;
+    let fotoDiambil = false; // mode wajib foto
+
+    async function aktifkanKamera() {
+      const btn = document.getElementById("btnCamera");
+
+      try {
+        // Cek support browser
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("Browser tidak mendukung akses kamera.");
+          return;
+        }
+
+        // Stop kamera lama
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(track => track.stop());
+          cameraStream = null;
+        }
+
+        const constraints = {
+          video: {
+            facingMode: "user", // lebih stabil daripada ideal
+            width: { ideal: 640 },
+            height: { ideal: 480 }
+          },
+          audio: false
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+        cameraStream = stream;
+        video.srcObject = stream;
+
+        // Tunggu video benar-benar siap (INI KUNCI!)
+        video.onloadedmetadata = () => {
+          video.play();
+        };
+
+        video.style.display = "block";
+        canvas.style.display = "none";
+
+        btn.innerText = "AMBIL FOTO";
+        btn.onclick = ambilFoto;
+
+        kameraAktif = true;
+
+      } catch (err) {
+         console.error("ERROR KAMERA:", err);
+  
+        if (err.name === "NotAllowedError") {
+          alert("IZIN KAMERA DITOLAK.\n\nSilakan klik ikon 🔒 di address bar → Site Settings → Camera → Allow → Reload halaman.");
+        } 
+        else if (err.name === "NotFoundError") {
+          alert("KAMERA TIDAK DITEMUKAN DI PERANGKAT.");
+        } 
+        else if (err.name === "NotReadableError") {
+          alert("KAMERA SEDANG DIGUNAKAN APLIKASI LAIN (Zoom / Teams / dll).");
+        } 
+        else {
+          alert("KAMERA TIDAK BISA DIAKSES:\n" + err.message);
+        }
+      }
+    }
+
+    function ambilFoto() {
+      const btn = document.getElementById("btnCamera");
+
+      // jika sudah ada foto → foto ulang
+      if (canvas.style.display === "block") {
+        // reset status foto
+        fotoDiambil = false;
+        document.getElementById("btnHadir").disabled = true;
+        document.getElementById("status").innerText = "Silakan ambil foto wajah terlebih dahulu";
+
+        canvas.style.display = "none";
+        video.style.display = "block";
+        btn.innerText = "AMBIL FOTO";
+        aktifkanKamera(); // hidupkan kamera lagi
+        return;
+      }
+
+      if (!video.videoWidth) {
+        alert("KAMERA BELUM SIAP, MOHON TUNGGU 2-3 DETIK.");
+        return;
+      }
+
+      const ratio = video.videoHeight / video.videoWidth;
+      canvas.width = 480;
+      canvas.height = 480 * ratio;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      video.style.display = "none";
+      canvas.style.display = "block";
+
+      // hentikan kamera setelah foto (hemat baterai & lebih stabil)
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+      }
+
+      btn.innerText = "FOTO ULANG";
+
+      // aktifkan tombol kirim karena foto sudah ada
+      fotoDiambil = true;
+      document.getElementById("btnHadir").disabled = false;
+      document.getElementById("status").innerText = "FOTO BERHASIL DIAMBIL";
+    }
+
+    function getCompressedImage(maxKB = 100) {
+      let quality = 0.8;
+      let dataUrl;
+      do {
+        dataUrl = canvas.toDataURL("image/jpeg", quality);
+        quality -= 0.05;
+      } while ((dataUrl.length * 3 / 4) / 1024 > maxKB && quality > 0.3);
+      return dataUrl;
+    }
+
+    function setLoading(isLoading) {
+      const btn = document.getElementById("btnHadir");
+      const text = document.getElementById("btnText");
+      const spinner = document.getElementById("spinner");
+
+      if (isLoading) {
+        btn.disabled = true;
+        text.innerText = "MENGIRIM...";
+        spinner.style.display = "inline-block";
+      } else {
+          btn.disabled = false;
+          text.innerText = "KIRIM";
+          spinner.style.display = "none";
+        }
+    }
+
+    function kirim() {
+        const pokja = getSelectedPokja();
+        const perusahaan = document.getElementById("perusahaan").value;
+        const nama = document.getElementById("nama").value;
+        const nik = document.getElementById("nik").value;
+        const jk = document.getElementById("jk").value;
+        const jabatan = document.getElementById("jabatan").value;
+        const telepon = document.getElementById("telepon").value;
+
+        if (!pokja || pokja.trim() === "" || !perusahaan || !nama || !nik || !jk || !jabatan || !telepon) {
+            alert("MINIMAL PILIH 1 POKJA DAN SEMUA DATA WAJIB DIISI");
+            return;
+        }
+
+        if (!/^\d{16}$/.test(nik)) {
+            alert("NIK HARUS 16 DIGIT ANGKA (TANPA SPASI/HURUF)");
+            return;
+        }
+
+        if (!/^62\d{8,13}$/.test(telepon)) {
+            alert("NOMOR TELEPON HARUS DIAWALI 62 DAN BERISI 9-15 DIGIT ANGKA");
+            return;
+        }
+
+        if (canvas.style.display === "none" || canvas.width === 0) {
+            alert("SILAHKAN AMBIL FOTO TERLEBIH DAHULU");
+            return;
+        }
+
+        // VALIDASI WAJIB FOTO (ANTI MANIPULASI)
+        if (!fotoDiambil || canvas.style.display === "none" || canvas.width === 0) {
+            alert("FOTO WAJAH WAJIB DIAMBIL TERLEBIH DAHULU!");
+            return;
+        }
+
+        setLoading(true);
+        const foto = getCompressedImage(100);
+
+        fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+            body: JSON.stringify({
+                pokja,
+                perusahaan,
+                nama,
+                nik,
+                jk,
+                jabatan,
+                telepon,
+                foto
+            })
+        })
+        .then(res => res.text())
+        .then(result => {
+        document.getElementById("status").innerText = result;
+        resetForm();
+        })
+        .catch(() => {
+        alert("GAGAL MENYIMPAN DATA");
+        setLoading(false);
+        });
+    }
+
+    function scrollKeAtas() {
+        document.querySelector(".container").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    function resetForm() {
+    // reset input
+        document.getElementById("perusahaan").value = "";
+        document.getElementById("nama").value = "";
+        document.getElementById("nik").value = "";
+        document.getElementById("jk").value = "";
+        document.getElementById("jabatan").value = "";
+        document.getElementById("telepon").value = "";
+        
+        document.querySelectorAll("#dropdownPokja input").forEach(cb => cb.checked = false);
+        document.getElementById("selectedPokja").innerText = "Pilih Pokja Pemilihan yang akan dituju";
+        document.getElementById("dropdownPokja").style.display = "none";
+
+        // reset canvas foto
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width = 0;
+        canvas.height = 0;
+
+        // reset status
+        document.getElementById("status").innerText = "";
+
+        // reset tombol
+        setLoading(false);
+
+        scrollKeAtas();
+
+        video.style.display = "block";
+        canvas.style.display = "none";
+        aktifkanKamera();
+
+        const btn = document.querySelector(".camera-actions button");
+        btn.innerText = "AMBIL FOTO";
+        btn.disabled = false;
+    }
+
+    document.addEventListener("click", function(e) {
+        if (!e.target.closest(".multiselect")) {
+            document.getElementById("dropdownPokja").style.display = "none";
+        }
+    });
+  </script>
+
+</body>
+</html>
