@@ -327,7 +327,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzGwpYo9DAcErnj3R0PdZhUy2X6AuyBc_EtPU2Ye8c77_LIGsZXNwIq8WSKEOt_HTuZ/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbymR5B4cUpHqtx2VMPgxaulzNj_71_n3hYT13PXaJnPNrtuEm5bWNK89kMCO8lX60Zn/exec";
 
     /* ===== TANGGAL UNTUK HEAD ===== */
     const tw = new Date();
@@ -589,6 +589,10 @@
 
         document.body.appendChild(form);
         form.submit();
+        setTimeout(() => {
+          setLoading(false);
+          resetForm();
+        }, 2000);
     }
 
     function scrollKeAtas() {
